@@ -1,7 +1,7 @@
 <template>
   <div>
-  <h2> Vendedor </h2>
-  Codigo de vendedor <input type="text">
+  <h2> Pupily Papa </h2>
+  Codigo de pupily <input type="text">
   </div>
 </template>
 

@@ -10,20 +10,25 @@ import Login from '../components/Login.vue'
 import Logout from '../components/Logout.vue'
 import About from '../components/About.vue'
 import PupilySingle from '../components/PupilySingle.vue'
+import PublicPupilyList from '../components/PublicPupilyList.vue'
+import MyPupilyList from '../components/MyPupilyList.vue'
 
 const routes = [
     { path: '/', component: Home },
     { path: '/about', component: About },
     { path: '/carritocompras', component: CarritoCompras },
     { path: '/login', component: Login },
-    { path: '/:pathMatch(.*)*', component: NotFound },
     { path: '/pupily/:id', component: PupilySingle },
-
+    { path: '/publiclist', component: PublicPupilyList },
+ 
+    { path: '/mypupilylist', component: MyPupilyList , meta: {requiresAuth:true}},
     { path: '/vendedor', component: Vendedor , meta: {requiresAuth:true}},
     { path: '/gestionventa', component: GestionVenta  , meta: {requiresAuth:true}},
     { path: '/usuario/:id', component: Usuario  , meta: {requiresAuth:true}},
     { path: '/confirmacompra', component: ConfirmaCompra  , meta: {requiresAuth:true}},
     { path: '/logout', component: Logout  , meta: {requiresAuth:true}},
+
+    { path: '/:pathMatch(.*)*', component: NotFound },     
 ]
 
 const router = createRouter({

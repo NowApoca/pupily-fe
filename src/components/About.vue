@@ -28,3 +28,9 @@
     margin-top: 50px;
   }
 </style>
+<script>
+export default {
+
+
+}
+</script>

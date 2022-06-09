@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import apiGestionVenta from '../services/apiGestionVenta.js'
+import apiGestionVenta from '../services/apiPupily.js'
 export default {
   data() {
     return {

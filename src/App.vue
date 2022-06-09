@@ -1,12 +1,14 @@
 <template>
 <nav class="navbar container" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="/"><strong class="is-size-4">Pupily</strong></a>
+      <router-link class="navbar-item" to="/"><strong class="is-size-4">Pupily</strong></router-link>
     </div>
     <div id="navbar" class="navbar-menu">
       <div class="navbar-start">
         <router-link to="/" class="navbar-item">Home</router-link>
+        <router-link to="/publiclist" class="navbar-item">All Pupilys</router-link>
         <router-link to="/about" class="navbar-item">About</router-link>
+        <router-link v-if="estaLogeado && soyPadrino" to="/mypupilylist" class="navbar-item">My Pupilys</router-link>
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
@@ -30,7 +32,7 @@ export default {
     const store = usuarioStore();
     const { estaLogeado } = storeToRefs(store);
     return {
-      estaLogeado
+      estaLogeado, soyPadrino:true
     };
   },
   methods: {
@@ -55,11 +57,11 @@ nav {
 	 margin-top: 25px;
 	 margin-bottom: 30px;
 }
- nav a {
+ nav a, nav router-link {
 	 font-weight: bold;
 	 color: #2c3e50;
 }
- nav a.router-link-exact-active {
+ nav a.router-link-exact-active, nav router-link.router-link-exact-active {
 	 color: #d88d00;
 }
 </style>
