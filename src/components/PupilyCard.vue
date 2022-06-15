@@ -2,16 +2,13 @@
 	<div class="card">
 		<div class="card-content">
 			<h2 class="is-size-4 has-text-weight-bold">{{ pupily.name }}</h2>
-			<small class="event-date">{{ pupily.date }}</small>
 			<span>DESCRIPTION</span>
+      		<button v-on:click="sponsorPupily" >Sponsor</button>
+      		<button v-on:click="desponsorPupily" >Desponsorear</button>
 		</div>
 	</div>
 </template>
-<script>
-export default {
-	props: ['pupily'],
-};
-</script>
+
 <style scoped>
 .card {
 	background-image: url('../assets/baby-pupi.jpg');
@@ -50,3 +47,49 @@ export default {
 	right: 0;
 }
 </style>
+
+<script>
+import service from '../services/apiUser'
+import { usuarioStore } from "../store/usuarioStore";
+import { storeToRefs } from 'pinia'
+
+export default {
+	props: ['pupily'],
+  setup() {
+    const store = usuarioStore();
+    store.getUsuario();
+    const { usuario } = storeToRefs(store);
+    return {
+		usuario
+    }
+  },
+  data() {
+    return {
+      mensajeDeError : ''
+    }
+  },
+  methods: {
+    async sponsorPupily(e) {
+		e.preventDefault()
+		let usuario = JSON.parse(this.usuario);
+		try{
+			await service.sponsorPupily(this.pupily.id, usuario);
+			location.reload()
+		}catch(e){
+			this.mensajeDeError = "ERROR AL BORRAR INSTITUCION"
+		}
+    },
+    async desponsorPupily(e) {
+		e.preventDefault()
+		let usuario = JSON.parse(this.usuario);
+		try{
+			await service.desponsorPupily(this.pupily.id, usuario);
+			location.reload()
+		}catch(e){
+			this.mensajeDeError = "ERROR AL BORRAR INSTITUCION"
+		}
+    }
+  }
+};
+
+</script>

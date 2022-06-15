@@ -2,7 +2,7 @@
   <div>
       <h2>Login</h2>      
       <form @submit.prevent="login">
-        Email <input type="text" v-model="usuario.email">
+        Email <input type="text" v-model="usuario.name">
         Passwors <input type="text" v-model="usuario.password">
         <button type="submit" >Login</button>
         {{ mensajeDeError }}
@@ -18,21 +18,21 @@ export default {
   setup() {
     const store = usuarioStore();
     const {estaLogeado}  = storeToRefs(store);
-    const {registerUser} = store;
+    const {loginUser} = store;
     return {
-      store, registerUser, estaLogeado
+      store, loginUser, estaLogeado
     }
   },
   data() {
     return {
-      usuario : {email: "", password: ""},
+      usuario : {name: "", password: ""},
       mensajeDeError : ''
     }
   },
   methods: {
     async login() {
       try {
-        await this.registerUser({...this.usuario})
+        await this.loginUser({...this.usuario})
         if (this.estaLogeado) {
           this.$router.push('/publiclist')
         } else {
