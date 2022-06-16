@@ -3,9 +3,9 @@
       <h2>Login</h2>      
       <form @submit.prevent="signup">
         Nombre <input type="text" v-model="usuario.name">
-        Password <input type="text" v-model="usuario.password">
-        Confirmar password <input type="text" v-model="usuario.confirmPassword">
-        <label for="cars">Choose a car:</label>
+        Password <input type="password" v-model="usuario.password">
+        Confirmar password <input type="password" v-model="usuario.confirmPassword">
+        <label for="cars">Elija tipo de usuario:</label>
         <select v-model="usuario.type">
           <option value="pupily">Pupily</option>
           <option value="sponsor">Promotor</option>

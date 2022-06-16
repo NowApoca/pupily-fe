@@ -15,6 +15,7 @@
   import InstitutionSingleCard from './InstitutionSingleCard.vue';
   import { ref, onMounted } from 'vue'
   import institutionService from '../../services/apiInstitution'
+  import { useRoute } from "vue-router"
 
   export default {
     name: 'home',
@@ -23,10 +24,10 @@
     },
     setup() {
       const institution = ref({});
+      const router = useRoute()
 
       onMounted(async () => {
-        const res = await institutionService.getInstitutionById(10);
-        console.log(res.data, 'RES DATA')
+        const res = await institutionService.getInstitutionById(router.params.id);
         institution.value = res.data;
       });
 

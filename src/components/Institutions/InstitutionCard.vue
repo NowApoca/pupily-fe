@@ -3,7 +3,6 @@
 		<div class="card-content">
 			<h2 class="is-size-4 has-text-weight-bold">{{ institution.name }}</h2>
 			<span>DESCRIPTION</span>
-      		  <button v-on:click="deleteInstitution" >Login</button>
       		  {{ mensajeDeError }}
 		</div>
 	</div>
@@ -31,16 +30,6 @@ export default {
     }
   },
   methods: {
-    async deleteInstitution(e) {
-		e.preventDefault()
-		let usuario = JSON.parse(this.usuario);
-		try{
-			await institutionService.deleteInstitution(this.institution.id, usuario);
-			location.reload()
-		}catch(e){
-			this.mensajeDeError = "ERROR AL BORRAR INSTITUCION"
-		}
-    }
   }
 };
 
@@ -49,7 +38,6 @@ export default {
 
 <style scoped>
 .card {
-	background-image: url('../../assets/baby-pupi.jpg');
 	height: 200px;
 	width: 20em;
 	background-position: center;
@@ -57,6 +45,9 @@ export default {
 	text-align: center;
 }
 .card-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 	padding-top: 50px;
 	color: #fff;
 	background-color: rgba(152, 152, 152, 0.35);

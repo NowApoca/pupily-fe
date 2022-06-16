@@ -34,7 +34,7 @@ export default {
       try {
         await this.loginUser({...this.usuario})
         if (this.estaLogeado) {
-          this.$router.push('/publiclist')
+          location = '/'
         } else {
           this.mensajeDeError = "Usuario o password inconrrecto"  
         }

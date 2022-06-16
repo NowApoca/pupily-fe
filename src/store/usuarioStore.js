@@ -15,7 +15,7 @@ export const usuarioStore = defineStore('main', {
             try {
                 const data = await axios.post('http://localhost:3001/users/login', usuario);
                 this.estaLogeado = true;
-                this.usuario = JSON.stringify(data.data);
+                this.usuario = data.data;
                 localStorage.setItem('usuario', JSON.stringify(data.data));
             } catch (error) {
                 console.log(error);
@@ -38,10 +38,10 @@ export const usuarioStore = defineStore('main', {
             let usuario = localStorage.getItem('usuario');
             if(usuario){
                 this.estaLogeado = true;
+                this.usuario = JSON.parse(usuario)
             }else{
                 this.estaLogeado = false;
             }
-            this.usuario = usuario;
         }
     },
 

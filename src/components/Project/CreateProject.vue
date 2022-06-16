@@ -21,7 +21,7 @@ export default {
     store.getUsuario();
     const { usuario } = storeToRefs(store);
     return {
-      usuario
+      usuario: usuario.value
     }
   },
   data() {
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     async createProject() {
-		  let usuario = JSON.parse(this.usuario);
+		  let usuario = this.usuario;
 		  try{
 		  	await projectService.createProject(this.project.name, usuario);
 		  	location.reload()

@@ -3,8 +3,6 @@
 		<div class="card-content">
 			<h2 class="is-size-4 has-text-weight-bold">{{ pupily.name }}</h2>
 			<span>DESCRIPTION</span>
-      		<button v-on:click="sponsorPupily" >Sponsor</button>
-      		<button v-on:click="desponsorPupily" >Desponsorear</button>
 		</div>
 	</div>
 </template>
@@ -19,6 +17,9 @@
 	text-align: center;
 }
 .card-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 	padding-top: 50px;
 	color: #fff;
 	background-color: rgba(152, 152, 152, 0.35);
@@ -60,7 +61,7 @@ export default {
     store.getUsuario();
     const { usuario } = storeToRefs(store);
     return {
-		usuario
+		usuario: usuario.value
     }
   },
   data() {
@@ -71,7 +72,7 @@ export default {
   methods: {
     async sponsorPupily(e) {
 		e.preventDefault()
-		let usuario = JSON.parse(this.usuario);
+		let usuario = this.usuario;
 		try{
 			await service.sponsorPupily(this.pupily.id, usuario);
 			location.reload()
@@ -81,7 +82,7 @@ export default {
     },
     async desponsorPupily(e) {
 		e.preventDefault()
-		let usuario = JSON.parse(this.usuario);
+		let usuario = this.usuario;
 		try{
 			await service.desponsorPupily(this.pupily.id, usuario);
 			location.reload()

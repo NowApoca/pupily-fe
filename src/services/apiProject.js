@@ -9,8 +9,12 @@ const apiClient = axios.create({
 })
 
 export default {
-    getAll(){
-      return apiClient.get('/projects')
+    getPupilyProjects(usuario){
+      return apiClient.get('/projects', {
+          headers: {
+              Authorization: usuario.token
+          }
+      })
     },
     getProjectById(id){
       return apiClient.get('/projects/'+ id)

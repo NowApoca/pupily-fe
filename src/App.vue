@@ -8,16 +8,18 @@
         <router-link to="/" class="navbar-item">Home</router-link>
         <router-link to="/publiclist" class="navbar-item">All Pupilys</router-link>
         <router-link to="/about" class="navbar-item">About</router-link>
-        <router-link v-if="estaLogeado" to="/mypupilylist" class="navbar-item">My Pupilys</router-link>
-        <router-link v-if="estaLogeado" to="/projects" class="navbar-item">My Projects</router-link>
-        <router-link v-if="estaLogeado" to="/institutions" class="navbar-item">Institutions</router-link>
-        <router-link v-if="estaLogeado" to="/create/admin" class="navbar-item">Crear admin</router-link>
-        <router-link v-if="estaLogeado" to="/create/project" class="navbar-item">Crear Projecto</router-link>
-        <router-link v-if="estaLogeado" to="/create/institution" class="navbar-item">Crear institucion</router-link>
+        <router-link v-if="estaLogeado && soyPadrino" to="/mypupilylist" class="navbar-item">My Pupilys</router-link>
+        <router-link v-if="estaLogeado && soyPupily" to="/projects" class="navbar-item">My Projects</router-link>
+        <router-link v-if="estaLogeado && (soyPupily || soyAdmin)" to="/institutions" class="navbar-item">Institutions</router-link>
+        <router-link v-if="estaLogeado && soyAdmin" to="/create/admin" class="navbar-item">Crear admin</router-link>
+        <router-link v-if="estaLogeado && soyPupily" to="/create/project" class="navbar-item">Crear Projecto</router-link>
+        <router-link v-if="estaLogeado && soyAdmin" to="/create/institution" class="navbar-item">Crear institucion</router-link>
+        <span v-if="estaLogeado" class="navbar-item">Hola {{userType}}, {{whoAmI}}!</span>
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
+              <router-link v-if="!estaLogeado" class="button is-dark navbar-item" to="/signup">Sign Up</router-link>
               <router-link v-if="!estaLogeado" class="button is-dark navbar-item" to="/login">Sign In</router-link>
               <a v-if="estaLogeado" class="button is-dark navbar-item" @click="logout">Sign Out</a>
           </div>
@@ -37,17 +39,23 @@ export default {
     const store = usuarioStore();
     store.getUsuario();
     const { estaLogeado, usuario } = storeToRefs(store);
-    let soyPadrino = usuario && usuario.type == 'sponsor';
-    let soyPupily = usuario && usuario.type == 'pupily';
-    let soyAdmin = usuario && usuario.type == 'admin';
+    let usuarioData = usuario.value
+    if(usuarioData){
+      usuarioData = usuarioData
+    }
+    let soyPadrino = usuarioData && usuarioData.type == 'sponsor';
+    let soyPupily = usuarioData && usuarioData.type == 'pupily';
+    let soyAdmin = usuarioData && usuarioData.type == 'admin';
+    let whoAmI = usuarioData && usuarioData.name;
+    let userType = usuarioData && usuarioData.type; 
     return {
-      estaLogeado, soyPadrino, soyPupily, soyAdmin, usuario: usuario
+      estaLogeado, soyPadrino, soyPupily, soyAdmin, usuario: usuario, whoAmI, userType
     };
   },
   methods: {
     logout() {
       usuarioStore().userLogout();
-      this.$router.push('/');
+      location = "/"
     }
   }
 };

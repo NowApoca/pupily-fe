@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     async createAdmin() {
-		  let usuario = JSON.parse(this.usuario);
+		  let usuario = this.usuario;
 		  try{
 		  	await userService.createAdmin(this.admin, usuario);
 		  	location.reload()

@@ -36,7 +36,7 @@ import { storeToRefs } from 'pinia'
       const { usuario } = storeToRefs(store);
       const list = ref([]);
       onMounted(async () => {
-        const usuarioData = JSON.parse(usuario._object.usuario);
+        const usuarioData = usuario.value;
         const res = await service.getUserById(10);
         if(usuarioData.type == 'sponsor'){
           list.value = res.data.pupilies;

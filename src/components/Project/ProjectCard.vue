@@ -33,7 +33,7 @@ export default {
   methods: {
     async editInstitution(e) {
 		e.preventDefault()
-		let usuario = JSON.parse(this.usuario);
+		let usuario = this.usuario;
 		try{
 			await projectService.editInstitution(this.project.id, usuario);
 			location.reload()

@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     async createInstitution() {
-		  let usuario = JSON.parse(this.usuario);
+		  let usuario = this.usuario;
 		  try{
 		  	await institutionService.createInstitution(this.institution.name, usuario);
 		  	location.reload()

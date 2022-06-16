@@ -22,6 +22,8 @@
   import ProjectsList from './ProjectsList.vue';
   import { ref, onMounted } from 'vue'
   import projectService from '../../services/apiProject.js'
+  import { usuarioStore } from "../../store/usuarioStore";
+  import { storeToRefs } from 'pinia'
 
   export default {
     name: 'home',
@@ -30,9 +32,12 @@
     },
     setup() {
       const list = ref([]);
+      const store = usuarioStore();
+      store.getUsuario();
+      const { usuario } = storeToRefs(store);
 
       onMounted(async () => {
-        const res = await projectService.getAll();
+        const res = await projectService.getPupilyProjects(usuario.value);
         list.value = res.data;
         console.log(res);
       });

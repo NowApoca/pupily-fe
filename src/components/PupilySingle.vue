@@ -18,10 +18,73 @@
         </div>
       </div>
     </section>
+    <section v-if="isPadrino" >
+			<div>
+      			<button v-if="!isPupilySponsored" v-on:click="sponsorPupily" >Sponsor</button>
+      			<button v-if="isPupilySponsored" v-on:click="desponsorPupily" >Desponsorear</button>
+			</div>
+      {{mensajeDeError}}
+    </section>
   </div>
 </template>
+
 <script>
-  export default {};
+
+import service from '../services/apiUser'
+import { usuarioStore } from "../store/usuarioStore";
+import { storeToRefs } from 'pinia'
+import {ref, onMounted} from "vue"
+import { useRoute } from 'vue-router'
+
+export default {
+  setup(props1) {
+    const store = usuarioStore();
+    const router = useRoute();
+    store.getUsuario();
+    const { usuario } = storeToRefs(store);
+    const usuarioValue = usuario.value;
+    const isPadrino = usuarioValue && usuarioValue.type == "sponsor";
+    const isPupilySponsored = ref(false);
+    const pupilyId = router.params.id;
+    onMounted(async () => {
+      const res = await service.getUserById(usuarioValue.id);
+      console.log(res.data.pupilies, 'res.data.pupilies')
+      isPupilySponsored.value = res.data.pupilies.filter(pupily => pupily.id == pupilyId)[0]? true:false;
+    });
+    return {
+		  usuario: usuario.value, isPadrino, isPupilySponsored, pupilyId
+    }
+  },
+  data() {
+    return {
+      mensajeDeError : ''
+    }
+  },
+  methods: {
+    async sponsorPupily(e) {
+		e.preventDefault()
+		let usuario = this.usuario;
+		try{
+			await service.sponsorPupily(this.pupilyId, usuario);
+			location.reload()
+		}catch(e){
+			this.mensajeDeError = "ERROR AL BORRAR INSTITUCION"
+		}
+    },
+    async desponsorPupily(e) {
+		e.preventDefault()
+		let usuario = this.usuario;
+    console.log(this.usuario, 'THIS USUARIO')
+		try{
+			await service.desponsorPupily(this.pupilyId, usuario);
+			location.reload()
+		}catch(e){
+			this.mensajeDeError = "ERROR AL BORRAR INSTITUCION"
+		}
+    }
+  },
+};
+
 </script>
 <style scoped>
   .pupily-content {

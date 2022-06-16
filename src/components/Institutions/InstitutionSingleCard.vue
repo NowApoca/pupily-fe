@@ -19,12 +19,16 @@
         </div>
       </div>
     </section>
-    <section>
+    <section v-if="soyAdmin">
         <form @submit.prevent="editInstitution">
         Name <input type="text" v-model="institutionNewData.name">
         <button type="submit" >Updatear institution</button>
-        {{ mensajeDeError }}
+        {{ mensajeDeErrorEdit }}
       </form>
+    </section>
+    <section  v-if="soyAdmin">
+      <button v-on:click="deleteInstitution" >Borrar inst</button>
+        {{ mensajeDeErrorDelete }}
     </section>
   </div>
 </template>
@@ -33,33 +37,46 @@
 import service from '../../services/apiInstitution'
 import { usuarioStore } from "../../store/usuarioStore";
 import { storeToRefs } from 'pinia'
+import { useRoute } from "vue-router";
 
 export default {
 	props: ['institution'],
   setup() {
     const store = usuarioStore();
+    const router = useRoute()
     store.getUsuario();
     const { usuario } = storeToRefs(store);
+
+    const soyAdmin = usuario && usuario.value.type == 'admin'
     return {
-		usuario
+		usuario, institutionId: router.params.id, soyAdmin
     }
   },
   data() {
     return {
         institutionNewData: {name: ""},
-      mensajeDeError : ''
+      mensajeDeErrorEdit : '',
+      mensajeDeErrorDelete : '',
     }
   },
   methods: {
     async editInstitution(e) {
 		e.preventDefault()
-		let usuario = JSON.parse(this.usuario);
-    console.log(this.institutionNewData, this.institution.id, usuario)
+		let usuario = this.usuario;
 		try{
-			await service.editInstitution(this.institutionNewData, this.institution.id, usuario);
+			await service.editInstitution(this.institutionNewData, this.institutionId, usuario);
 			location.reload()
 		}catch(e){
-            console.log(e)
+			this.mensajeDeError = "ERROR AL BORRAR INSTITUCION"
+		}
+    },
+    async deleteInstitution(e) {
+		e.preventDefault()
+		let usuario = this.usuario;
+		try{
+			await service.deleteInstitution(this.institutionId, usuario);
+			this.$router.push('/institutions');
+		}catch(e){
 			this.mensajeDeError = "ERROR AL BORRAR INSTITUCION"
 		}
     }

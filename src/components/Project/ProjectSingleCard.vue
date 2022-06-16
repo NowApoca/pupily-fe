@@ -41,7 +41,7 @@ export default {
     store.getUsuario();
     const { usuario } = storeToRefs(store);
     return {
-		usuario
+		usuario: usuario.value
     }
   },
   data() {
@@ -53,13 +53,14 @@ export default {
   methods: {
     async editProject(e) {
 		e.preventDefault()
-		let usuario = JSON.parse(this.usuario);
+    console.log(this.usuario, 'THIS USUARIO')
+		let usuario = this.usuario;
 		try{
 			await service.editProject(this.projectNewData, this.project.id, usuario);
 			location.reload()
 		}catch(e){
             console.log(e)
-			this.mensajeDeError = "ERROR AL BORRAR INSTITUCION"
+			this.mensajeDeError = "ERROR AL EDITAR PROJECT"
 		}
     }
   }

@@ -1,11 +1,6 @@
 import {createRouter,createWebHashHistory} from 'vue-router'
-import Vendedor from '../components/Vendedor.vue'
 import Home from '../components/Home.vue'
-import GestionVenta from '../components/GestionVenta.vue'
-import Usuario from '../components/Usuario.vue'
 import NotFound from '../components/NotFound.vue'
-import CarritoCompras from '../components/CarritoCompras.vue'
-import ConfirmaCompra from '../components/ConfirmaCompra.vue'
 import Login from '../components/Login.vue'
 import SignUp from '../components/SignUp.vue'
 import Logout from '../components/Logout.vue'
@@ -24,7 +19,6 @@ import PupilyProjectList from '../components/Project/PupilyProjectList.vue'
 const routes = [
     { path: '/', component: Home },
     { path: '/about', component: About },
-    { path: '/carritocompras', component: CarritoCompras },
     { path: '/login', component: Login },
     { path: '/signup', component: SignUp }, 
     { path: '/pupily/:id', component: PupilySingle },
@@ -38,10 +32,6 @@ const routes = [
     { path: '/create/admin', component: CreateAdmin },
  
     { path: '/mypupilylist', component: MyPupilyList , meta: {requiresAuth:true}},
-    { path: '/vendedor', component: Vendedor , meta: {requiresAuth:true}},
-    { path: '/gestionventa', component: GestionVenta  , meta: {requiresAuth:true}},
-    { path: '/usuario/:id', component: Usuario  , meta: {requiresAuth:true}},
-    { path: '/confirmacompra', component: ConfirmaCompra  , meta: {requiresAuth:true}},
     { path: '/logout', component: Logout  , meta: {requiresAuth:true}},
 
     { path: '/:pathMatch(.*)*', component: NotFound },     
@@ -55,8 +45,6 @@ const router = createRouter({
 router.beforeEach(  (to, from, next) => {
 
     const login = localStorage.getItem('usuario')
-    const obj = JSON.parse(login)
-    //console.log( obj );
 
     if( to.matched.some(record => record.meta.requiresAuth ) && !login ) {
         next('/')
