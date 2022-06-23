@@ -5,23 +5,27 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title">{{ project.name }}</h1>
-          <h2 class="subtitle">Pupily stats</h2>
         </div>
       </div>
     </section>
     <section class="pupily-content">
       <div class="container">
-        <p class="is-size-4 description">Pupily description</p>
-        <p class="is-size-4">Location:</p>
-        <p class="is-size-4">Category:</p>
-        <div class="pupily-images columns is-multiline has-text-centered">
-          <div class="column is-one-third">IMAGE PLACEHOLDER</div>
-        </div>
+        <p class="is-size-4 description">Project description: {{ project.descripcion }}</p>
+        <p class="is-size-4">Project porcentaje: {{ project.porcentaje }}</p>
       </div>
     </section>
+        <br>
+        <br>
     <section>
         <form @submit.prevent="editProject">
+          EDITAR PROYECTO
+        <br>
         Name <input type="text" v-model="projectNewData.name">
+        <br>
+        Descripcion <input type="text" v-model="projectNewData.descripcion">
+        <br>
+        Porcentaje <input type="text" v-model="projectNewData.porcentaje">
+        <br>
         <button type="submit" >Updatear project</button>
         {{ mensajeDeError }}
       </form>
@@ -46,14 +50,13 @@ export default {
   },
   data() {
     return {
-        projectNewData: {name: ""},
+        projectNewData: {...this.project},
       mensajeDeError : ''
     }
   },
   methods: {
     async editProject(e) {
 		e.preventDefault()
-    console.log(this.usuario, 'THIS USUARIO')
 		let usuario = this.usuario;
 		try{
 			await service.editProject(this.projectNewData, this.project.id, usuario);

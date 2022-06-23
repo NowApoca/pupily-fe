@@ -13,17 +13,15 @@ export default {
       return apiClient.get('/institutions')
     },
     deleteInstitution(id, usuario){
-        console.log(usuario, 'usuario')
+        console.log(usuario, 'usuario')``
         return apiClient.delete('/institutions/' + id, {
             headers: {
                 "Authorization": usuario.token
             }
         })
     },
-    createInstitution(name, usuario){
-        return axios.post('http://localhost:3001/institutions', {
-            name
-        }, {
+    createInstitution(payload, usuario){
+        return axios.post('http://localhost:3001/institutions', payload, {
             headers: {
                 "Authorization": usuario.token
             }

@@ -3,11 +3,26 @@
     <h2 class="subtitle is-3">Check out our institutions</h2>
     <div class="columns is-multiline">
       <div class="columns is-multiline">
-      <div v-for="institution in list" :institution="institution" :key="institution.id" class="column is-one-quarter">
-        <router-link :to="'/institution/' + institution.id">
-          <InstitutionCard :institution="institution" />
-        </router-link>
-      </div>
+        <table class="table">
+      <thead>
+        <tr>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+    <th>Ubicacion</th>
+  </tr>
+      </thead>
+      <tbody>
+  <tr v-for="institution in list" :institution="institution" :key="institution.id">
+    <td>
+      <router-link :to="'/institution/' + institution.id">
+        {{institution.name}}
+      </router-link>
+      </td>
+    <td>{{institution.description}}</td>
+    <td>{{institution.location}}</td>
+  </tr>
+      </tbody>
+</table>
     </div>
     </div>
   </div>
@@ -28,5 +43,12 @@
   .events {
     margin-top: 100px;
     text-align: center;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
   }
 </style>

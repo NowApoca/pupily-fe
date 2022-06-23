@@ -2,7 +2,13 @@
   <div>
       <h2>Crear admin</h2>      
       <form @submit.prevent="createInstitution">
+        <br>
         Name <input type="text" v-model="institution.name">
+        <br>
+        Descripcion <input type="text" v-model="institution.description">
+        <br>
+        Ubicacion <input type="text" v-model="institution.location">
+        <br>
         <button type="submit" >Crear</button>
         {{ mensajeDeError }}
       </form>
@@ -25,7 +31,7 @@ export default {
   },
   data() {
     return {
-      institution : {name: ""},
+      institution : {name: "", location:"", description: ""},
       mensajeDeError : ''
     }
   },
@@ -33,7 +39,7 @@ export default {
     async createInstitution() {
 		  let usuario = this.usuario;
 		  try{
-		  	await institutionService.createInstitution(this.institution.name, usuario);
+		  	await institutionService.createInstitution(this.institution, usuario);
 		  	location.reload()
 		  }catch(e){
 		  	this.mensajeDeError = "ERROR AL CREAR INSTITUCION"

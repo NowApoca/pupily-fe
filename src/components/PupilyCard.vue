@@ -12,6 +12,7 @@
 	background-image: url('../assets/baby-pupi.jpg');
 	height: 200px;
 	width: 20em;
+	min-width: 20em;
 	background-position: center;
 	background-size: cover;
 	text-align: center;

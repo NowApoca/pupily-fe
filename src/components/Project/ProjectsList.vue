@@ -1,13 +1,27 @@
 <template>
   <div class="events container">
-    <h2 class="subtitle is-3">Check out our projects</h2>
     <div class="columns is-multiline">
       <div class="columns is-multiline">
-      <div v-for="project in list" :project="project" :key="project.id" class="column is-one-quarter">
-        <router-link :to="'/project/' + project.id">
-          <ProjectCard :project="project" />
-        </router-link>
-      </div>
+      <table class="table">
+      <thead>
+        <tr>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+    <th>Porcentaje</th>
+  </tr>
+      </thead>
+      <tbody>
+  <tr v-for="project in list" :project="project" :key="project.id">
+    <td>
+      <router-link :to="'/project/' + project.id">
+        {{project.name}}
+      </router-link>
+      </td>
+    <td>{{project.descripcion}}</td>
+    <td>{{project.porcentaje}}</td>
+  </tr>
+      </tbody>
+</table>
     </div>
     </div>
   </div>

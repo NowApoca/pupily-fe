@@ -3,9 +3,12 @@
     <div class="hero is-primary">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title is-size-1">All Projects</h1>
+          <h1 class="title is-size-1">My Projects</h1>
         </div>
       </div>
+    </div>
+    <div>
+        <router-link class="button is-dark" to="/create/project">Crear Projecto</router-link>
     </div>
     <div class="container">
       <ProjectsList :list="list" />
@@ -15,6 +18,13 @@
 <style scoped>
   .block-text {
     margin-top: 50px;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
 </style>
 

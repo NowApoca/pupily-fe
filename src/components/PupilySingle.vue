@@ -3,19 +3,15 @@
     <section class="hero is-primary">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title">Pupily name</h1>
-          <h2 class="subtitle">Pupily stats</h2>
+          <h1 class="title">Nombre: {{pupilyData.surname}}, {{pupilyData.name}}.</h1>
+      		<h2 class="subtitle is-3" v-if="isPupilySponsored"  >{{pupilyData.type}}</h2>
+      		<h3 class="subtitle is-5" v-if="isPupilySponsored"  >Sponsoreado</h3>
         </div>
       </div>
     </section>
     <section class="pupily-content">
       <div class="container">
-        <p class="is-size-4 description">Pupily description</p>
-        <p class="is-size-4">Location:</p>
-        <p class="is-size-4">Category:</p>
-        <div class="pupily-images columns is-multiline has-text-centered">
-          <div class="column is-one-third">IMAGE PLACEHOLDER</div>
-        </div>
+        <p class="is-size-4 description">Pupily borndate: {{pupilyData.bornDate?.slice(0, 10)}}</p>
       </div>
     </section>
     <section v-if="isPadrino" >
@@ -25,18 +21,26 @@
 			</div>
       {{mensajeDeError}}
     </section>
+    <section>
+      <ProjectsList :list="pupilyData.projects" />
+    </section>
   </div>
 </template>
 
 <script>
 
 import service from '../services/apiUser'
+import projectService from "../services/apiProject"
 import { usuarioStore } from "../store/usuarioStore";
 import { storeToRefs } from 'pinia'
 import {ref, onMounted} from "vue"
 import { useRoute } from 'vue-router'
+import ProjectsList from "./Project/ProjectsList.vue"
 
 export default {
+    components: {
+      ProjectsList,
+    },
   setup(props1) {
     const store = usuarioStore();
     const router = useRoute();
@@ -45,14 +49,19 @@ export default {
     const usuarioValue = usuario.value;
     const isPadrino = usuarioValue && usuarioValue.type == "sponsor";
     const isPupilySponsored = ref(false);
+    const pupilyData = ref({});
     const pupilyId = router.params.id;
     onMounted(async () => {
+      const resPupily = await service.getUserById(pupilyId);
+      const resProjects = await projectService.getPupilyProjectsByPupily(pupilyId)
+      pupilyData.value = resPupily.data;
+      pupilyData.value.projects = resProjects.data;
       const res = await service.getUserById(usuarioValue.id);
-      console.log(res.data.pupilies, 'res.data.pupilies')
       isPupilySponsored.value = res.data.pupilies.filter(pupily => pupily.id == pupilyId)[0]? true:false;
     });
     return {
-		  usuario: usuario.value, isPadrino, isPupilySponsored, pupilyId
+		  usuario: usuario.value, isPadrino, isPupilySponsored, 
+      pupilyId, pupilyData
     }
   },
   data() {

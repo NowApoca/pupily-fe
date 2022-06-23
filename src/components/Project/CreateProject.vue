@@ -3,6 +3,11 @@
       <h2>Crear project</h2>      
       <form @submit.prevent="createProject">
         Name <input type="text" v-model="project.name">
+        <br>
+        Descripcion <input type="text" v-model="project.descripcion">
+        <br>
+        Porcentaje <input type="number" v-model="project.porcentaje">
+        <br>
         <button type="submit" >Crear</button>
         {{ mensajeDeError }}
       </form>
@@ -26,7 +31,7 @@ export default {
   },
   data() {
     return {
-      project : {name: ""},
+      project : {name: "", porcentaje: 0, descripcion: ""},
       mensajeDeError : ''
     }
   },
@@ -34,7 +39,7 @@ export default {
     async createProject() {
 		  let usuario = this.usuario;
 		  try{
-		  	await projectService.createProject(this.project.name, usuario);
+		  	await projectService.createProject(this.project, usuario);
 		  	location.reload()
 		  }catch(e){
 		  	this.mensajeDeError = "ERROR AL CREAR PROJECT"

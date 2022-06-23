@@ -3,7 +3,9 @@
       <h2>Login</h2>      
       <form @submit.prevent="login">
         Email <input type="text" v-model="usuario.name">
-        Passwors <input type="text" v-model="usuario.password">
+        <br>
+        Passwors <input type="password" v-model="usuario.password">
+        <br>
         <button type="submit" >Login</button>
         {{ mensajeDeError }}
       </form>

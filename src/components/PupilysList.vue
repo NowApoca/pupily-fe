@@ -1,6 +1,5 @@
 <template>
   <div class="events container">
-    <h2 class="subtitle is-3">Check out our newcomers Pupilys</h2>
     <div class="columns is-multiline">
       <div class="columns is-multiline">
       <div v-for="pupily in list" :pupily="pupily" :key="pupily.id" class="column is-one-quarter">

@@ -12,7 +12,6 @@
         <router-link v-if="estaLogeado && soyPupily" to="/projects" class="navbar-item">My Projects</router-link>
         <router-link v-if="estaLogeado && (soyPupily || soyAdmin)" to="/institutions" class="navbar-item">Institutions</router-link>
         <router-link v-if="estaLogeado && soyAdmin" to="/create/admin" class="navbar-item">Crear admin</router-link>
-        <router-link v-if="estaLogeado && soyPupily" to="/create/project" class="navbar-item">Crear Projecto</router-link>
         <router-link v-if="estaLogeado && soyAdmin" to="/create/institution" class="navbar-item">Crear institucion</router-link>
         <span v-if="estaLogeado" class="navbar-item">Hola {{userType}}, {{whoAmI}}!</span>
       </div>

@@ -12,16 +12,18 @@
     <section class="pupily-content">
       <div class="container">
         <p class="is-size-4 description">Institution description</p>
-        <p class="is-size-4">Location:</p>
-        <p class="is-size-4">Category:</p>
-        <div class="pupily-images columns is-multiline has-text-centered">
-          <div class="column is-one-third">IMAGE PLACEHOLDER</div>
-        </div>
+        <p class="is-size-4">Ubicacion: {{institution.location}}</p>
+        <p class="is-size-4">Descripcion: {{institution.description}}</p>
       </div>
     </section>
     <section v-if="soyAdmin">
         <form @submit.prevent="editInstitution">
         Name <input type="text" v-model="institutionNewData.name">
+        <br>
+        Ubicacion <input type="text" v-model="institutionNewData.location">
+        <br>
+        Descripcion <input type="text" v-model="institutionNewData.description">
+        <br>
         <button type="submit" >Updatear institution</button>
         {{ mensajeDeErrorEdit }}
       </form>
@@ -54,7 +56,7 @@ export default {
   },
   data() {
     return {
-        institutionNewData: {name: ""},
+        institutionNewData: {name: "", location: "", description: ""},
       mensajeDeErrorEdit : '',
       mensajeDeErrorDelete : '',
     }

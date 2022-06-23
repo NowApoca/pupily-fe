@@ -3,6 +3,8 @@
       <h2>Crear admin</h2>      
       <form @submit.prevent="createAdmin">
         Name <input type="text" v-model="admin.name">
+        Surname <input type="text" v-model="admin.surname">
+        Borndate <input type="date" v-model="admin.bornDate">
         Password <input type="password" v-model="admin.password">
         <button type="submit" >Crear</button>
         {{ mensajeDeError }}
@@ -27,7 +29,7 @@ export default {
   },
   data() {
     return {
-      admin : {name: "", password: ""},
+      admin : {name: "", password: "", surname: "", bornDate: null},
       mensajeDeError : ''
     }
   },

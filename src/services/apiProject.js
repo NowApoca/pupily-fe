@@ -10,19 +10,20 @@ const apiClient = axios.create({
 
 export default {
     getPupilyProjects(usuario){
-      return apiClient.get('/projects', {
+      return apiClient.get(`/projects`, {
           headers: {
               Authorization: usuario.token
           }
       })
     },
+    getPupilyProjectsByPupily(userId){
+      return apiClient.get(`/projects/by/user/${userId}`)
+    },
     getProjectById(id){
       return apiClient.get('/projects/'+ id)
     },
-    createProject(name, usuario){
-        return axios.post('http://localhost:3001/projects', {
-            name
-        }, {
+    createProject(payload, usuario){
+        return axios.post('http://localhost:3001/projects', payload, {
             headers: {
                 "Authorization": usuario.token
             }
